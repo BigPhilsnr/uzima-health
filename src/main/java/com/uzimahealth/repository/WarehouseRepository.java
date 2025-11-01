@@ -1,0 +1,7 @@
+package com.uzimahealth.repository;
+
+import com.uzimahealth.stock.Warehouse;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface WarehouseRepository extends JpaRepository<Warehouse, Long> {
+}
