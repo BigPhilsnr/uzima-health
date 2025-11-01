@@ -1,6 +1,5 @@
 package com.uzimahealth.model;
 
-import com.uzimahealth.stock.Item;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,17 +10,15 @@ public class PurchaseOrderItem {
     @ManyToOne
     @JoinColumn(name = "po_id")
     private PurchaseOrder purchaseOrder;
-    @ManyToOne
-    @JoinColumn(name = "item_id")
-    private Item item;
+    private String itemCode;
     private int quantity;
     private double unitPrice;
 
     public PurchaseOrderItem() {}
 
-    public PurchaseOrderItem(PurchaseOrder purchaseOrder, Item item, int quantity, double unitPrice) {
+    public PurchaseOrderItem(PurchaseOrder purchaseOrder, String itemCode, int quantity, double unitPrice) {
         this.purchaseOrder = purchaseOrder;
-        this.item = item;
+        this.itemCode = itemCode;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
     }
@@ -31,8 +28,8 @@ public class PurchaseOrderItem {
     public void setId(Long id) { this.id = id; }
     public PurchaseOrder getPurchaseOrder() { return purchaseOrder; }
     public void setPurchaseOrder(PurchaseOrder purchaseOrder) { this.purchaseOrder = purchaseOrder; }
-    public Item getItem() { return item; }
-    public void setItem(Item item) { this.item = item; }
+    public String getItemCode() { return itemCode; }
+    public void setItemCode(String itemCode) { this.itemCode = itemCode; }
     public int getQuantity() { return quantity; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
     public double getUnitPrice() { return unitPrice; }

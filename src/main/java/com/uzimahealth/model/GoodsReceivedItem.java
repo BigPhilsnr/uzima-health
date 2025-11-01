@@ -1,6 +1,5 @@
 package com.uzimahealth.model;
 
-import com.uzimahealth.stock.Item;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -12,9 +11,7 @@ public class GoodsReceivedItem {
     @ManyToOne
     @JoinColumn(name = "grn_id")
     private GoodsReceivedNote grn;
-    @ManyToOne
-    @JoinColumn(name = "item_id")
-    private Item item;
+    private String itemCode;
     private int receivedQuantity;
     private int acceptedQuantity;
     private String batchNumber;
@@ -24,10 +21,10 @@ public class GoodsReceivedItem {
 
     public GoodsReceivedItem() {}
 
-    public GoodsReceivedItem(GoodsReceivedNote grn, Item item, int receivedQuantity, int acceptedQuantity,
+    public GoodsReceivedItem(GoodsReceivedNote grn, String itemCode, int receivedQuantity, int acceptedQuantity,
                              String batchNumber, LocalDate expiryDate, double unitCost, String remarks) {
         this.grn = grn;
-        this.item = item;
+        this.itemCode = itemCode;
         this.receivedQuantity = receivedQuantity;
         this.acceptedQuantity = acceptedQuantity;
         this.batchNumber = batchNumber;
@@ -41,8 +38,8 @@ public class GoodsReceivedItem {
     public void setId(Long id) { this.id = id; }
     public GoodsReceivedNote getGrn() { return grn; }
     public void setGrn(GoodsReceivedNote grn) { this.grn = grn; }
-    public Item getItem() { return item; }
-    public void setItem(Item item) { this.item = item; }
+    public String getItemCode() { return itemCode; }
+    public void setItemCode(String itemCode) { this.itemCode = itemCode; }
     public int getReceivedQuantity() { return receivedQuantity; }
     public void setReceivedQuantity(int receivedQuantity) { this.receivedQuantity = receivedQuantity; }
     public int getAcceptedQuantity() { return acceptedQuantity; }

@@ -1,6 +1,5 @@
 package com.uzimahealth.model;
 
-import com.uzimahealth.stock.Item;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,9 +10,8 @@ public class PrescriptionItem {
     @ManyToOne
     @JoinColumn(name = "prescription_id")
     private Prescription prescription;
-    @ManyToOne
-    @JoinColumn(name = "item_id")
-    private Item item;
+    private String itemCode;
+    private String itemName;
     private int quantity;
     private String dosage;
     private String frequency;
@@ -22,10 +20,11 @@ public class PrescriptionItem {
 
     public PrescriptionItem() {}
 
-    public PrescriptionItem(Prescription prescription, Item item, int quantity, String dosage,
+    public PrescriptionItem(Prescription prescription, String itemCode, String itemName, int quantity, String dosage,
                             String frequency, String duration, String instructions) {
         this.prescription = prescription;
-        this.item = item;
+        this.itemCode = itemCode;
+        this.itemName = itemName;
         this.quantity = quantity;
         this.dosage = dosage;
         this.frequency = frequency;
@@ -38,8 +37,10 @@ public class PrescriptionItem {
     public void setId(Long id) { this.id = id; }
     public Prescription getPrescription() { return prescription; }
     public void setPrescription(Prescription prescription) { this.prescription = prescription; }
-    public Item getItem() { return item; }
-    public void setItem(Item item) { this.item = item; }
+    public String getItemCode() { return itemCode; }
+    public void setItemCode(String itemCode) { this.itemCode = itemCode; }
+    public String getItemName() { return itemName; }
+    public void setItemName(String itemName) { this.itemName = itemName; }
     public int getQuantity() { return quantity; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
     public String getDosage() { return dosage; }

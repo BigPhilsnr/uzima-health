@@ -2,9 +2,6 @@ package com.uzimahealth.config;
 
 import com.uzimahealth.model.*;
 import com.uzimahealth.repository.*;
-import com.uzimahealth.stock.Item;
-import com.uzimahealth.stock.Stock;
-import com.uzimahealth.stock.StockLedgerEntry;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +16,6 @@ public class DataLoader implements CommandLineRunner {
     private final VisitRepository visitRepository;
     private final TriageRepository triageRepository;
     private final ConsultationRepository consultationRepository;
-    private final ItemRepository itemRepository;
-    private final StockRepository stockRepository;
     private final PrescriptionRepository prescriptionRepository;
     private final PrescriptionItemRepository prescriptionItemRepository;
     private final InvoiceRepository invoiceRepository;
@@ -28,8 +23,7 @@ public class DataLoader implements CommandLineRunner {
 
     public DataLoader(UserRepository userRepository, PatientRepository patientRepository,
                       VisitRepository visitRepository, TriageRepository triageRepository,
-                      ConsultationRepository consultationRepository, ItemRepository itemRepository,
-                      StockRepository stockRepository, PrescriptionRepository prescriptionRepository,
+                      ConsultationRepository consultationRepository, PrescriptionRepository prescriptionRepository,
                       PrescriptionItemRepository prescriptionItemRepository, InvoiceRepository invoiceRepository,
                       PaymentRepository paymentRepository) {
         this.userRepository = userRepository;
@@ -37,8 +31,6 @@ public class DataLoader implements CommandLineRunner {
         this.visitRepository = visitRepository;
         this.triageRepository = triageRepository;
         this.consultationRepository = consultationRepository;
-        this.itemRepository = itemRepository;
-        this.stockRepository = stockRepository;
         this.prescriptionRepository = prescriptionRepository;
         this.prescriptionItemRepository = prescriptionItemRepository;
         this.invoiceRepository = invoiceRepository;
@@ -71,20 +63,9 @@ public class DataLoader implements CommandLineRunner {
         consultationRepository.save(new Consultation(visit1, "Fever and cough", "Mild infection", "J00 - Acute nasopharyngitis",
                 "Prescribed antibiotics", "Rest and medication", doctor));
 
-        // Sample items
-        Item paracetamol = itemRepository.save(new Item("ITM001", "Paracetamol 500mg", "Drug", "Tablets", "Pain reliever",
-                true, false, null, "PharmaCorp", "MediLab", 0.5, 0.5, 50, "365", true, true, false));
-        Item amoxicillin = itemRepository.save(new Item("ITM002", "Amoxicillin 500mg", "Drug", "Capsules", "Antibiotic",
-                true, false, null, "MediLab", "PharmaCorp", 1.2, 1.2, 20, "180", true, true, false));
-
-        // Sample stock
-        stockRepository.save(new Stock(paracetamol, "BATCH001", LocalDate.of(2026, 12, 31), 100, "Pharmacy Store", 0.5));
-        stockRepository.save(new Stock(amoxicillin, "BATCH002", LocalDate.of(2026, 6, 30), 50, "Pharmacy Store", 1.2));
-
-        // Sample prescription
+        // Sample prescription (without items - items will be managed by stock service)
         Prescription prescription = prescriptionRepository.save(new Prescription(visit1, Arrays.asList(), doctor));
-        PrescriptionItem item1 = prescriptionItemRepository.save(new PrescriptionItem(prescription, paracetamol, 10, "1 tablet", "3 times daily", "5 days", "After meals"));
-        prescription.setItems(Arrays.asList(item1));
+        // Note: Prescription items will be created when communicating with stock service
         prescriptionRepository.save(prescription);
 
         // Sample invoice
@@ -92,5 +73,7 @@ public class DataLoader implements CommandLineRunner {
 
         // Sample payment
         paymentRepository.save(new Payment(invoice, 55.0, "Cash", "CASH001", clerk, "Full payment"));
+
+        System.out.println("HMIS sample data loaded successfully!");
     }
 }

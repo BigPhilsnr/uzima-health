@@ -19,9 +19,7 @@ public class PrescriptionService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private ItemRepository itemRepository;
-    @Autowired
-    private StockService stockService;
+    private HealthEventPublisher eventPublisher;
 
     public Prescription createPrescription(Long visitId, List<PrescriptionItem> items, Long userId) {
         Optional<Visit> visit = visitRepository.findById(visitId);
@@ -41,9 +39,16 @@ public class PrescriptionService {
     public void dispensePrescription(Long prescriptionId) {
         Optional<Prescription> prescription = prescriptionRepository.findById(prescriptionId);
         if (prescription.isPresent()) {
+            // Publish events to stock service for each prescription item
             for (PrescriptionItem item : prescription.get().getItems()) {
-                stockService.deductStock(item.getItem().getId(), item.getQuantity(), "Pharmacy Store",
-                                        "Prescription " + prescriptionId, prescription.get().getPrescribedBy().getId());
+                eventPublisher.publishPrescriptionDispensed(
+                    "PRESC" + prescriptionId,
+                    item.getItemCode(),
+                    item.getItemName(),
+                    item.getQuantity(),
+                    "Pharmacy Store", // Default warehouse
+                    prescription.get().getPrescribedBy().getUsername()
+                );
             }
             prescription.get().setStatus("Dispensed");
             prescriptionRepository.save(prescription.get());
