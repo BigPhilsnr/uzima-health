@@ -72,8 +72,10 @@ public class DataLoader implements CommandLineRunner {
                 "Prescribed antibiotics", "Rest and medication", doctor));
 
         // Sample items
-        Item paracetamol = itemRepository.save(new Item("ITM001", "Paracetamol 500mg", "Drug", "Tablets", "PharmaCorp", 50, 0.5, "Pain reliever"));
-        Item amoxicillin = itemRepository.save(new Item("ITM002", "Amoxicillin 500mg", "Drug", "Capsules", "MediLab", 20, 1.2, "Antibiotic"));
+        Item paracetamol = itemRepository.save(new Item("ITM001", "Paracetamol 500mg", "Drug", "Tablets", "Pain reliever",
+                true, false, null, "PharmaCorp", "MediLab", 0.5, 0.5, 50, "365", true, true, false));
+        Item amoxicillin = itemRepository.save(new Item("ITM002", "Amoxicillin 500mg", "Drug", "Capsules", "Antibiotic",
+                true, false, null, "MediLab", "PharmaCorp", 1.2, 1.2, 20, "180", true, true, false));
 
         // Sample stock
         stockRepository.save(new Stock(paracetamol, "BATCH001", LocalDate.of(2026, 12, 31), 100, "Pharmacy Store", 0.5));

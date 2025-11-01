@@ -1,5 +1,6 @@
 package com.uzimahealth.model;
 
+import com.uzimahealth.stock.Item;
 import jakarta.persistence.*;
 
 @Entity
