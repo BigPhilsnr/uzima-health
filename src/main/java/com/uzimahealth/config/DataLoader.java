@@ -4,7 +4,7 @@ import com.uzimahealth.model.*;
 import com.uzimahealth.repository.*;
 import com.uzimahealth.stock.Item;
 import com.uzimahealth.stock.Stock;
-import com.uzimahealth.stock.StockLedger;
+import com.uzimahealth.stock.StockLedgerEntry;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 

@@ -4,7 +4,7 @@ import com.uzimahealth.model.*;
 import com.uzimahealth.repository.*;
 import com.uzimahealth.stock.Item;
 import com.uzimahealth.stock.Stock;
-import com.uzimahealth.stock.StockLedger;
+import com.uzimahealth.stock.StockLedgerEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ public class StockService {
     @Autowired
     private StockRepository stockRepository;
     @Autowired
-    private StockLedgerRepository stockLedgerRepository;
+    private StockLedgerEntryRepository stockLedgerRepository;
     @Autowired
     private ItemRepository itemRepository;
     @Autowired
@@ -55,7 +55,7 @@ public class StockService {
     private void logStockTransaction(Item item, String type, int quantity, String batch, String reference, String store, Long userId) {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
-            StockLedger ledger = new StockLedger(item, type, quantity, batch, reference, store, user.get(), "");
+            StockLedgerEntry ledger = new StockLedgerEntry(item, type, quantity, batch, reference, store, user.get(), "");
             stockLedgerRepository.save(ledger);
         }
     }

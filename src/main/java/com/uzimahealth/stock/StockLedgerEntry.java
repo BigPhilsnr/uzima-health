@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class StockLedger {
+public class StockLedgerEntry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,10 +22,10 @@ public class StockLedger {
     private User performedBy;
     private String notes;
 
-    public StockLedger() {}
+    public StockLedgerEntry() {}
 
-    public StockLedger(Item item, String transactionType, int quantity, String batchNumber,
-                       String reference, String store, User performedBy, String notes) {
+    public StockLedgerEntry(Item item, String transactionType, int quantity, String batchNumber,
+                           String reference, String store, User performedBy, String notes) {
         this.item = item;
         this.transactionType = transactionType;
         this.quantity = quantity;
